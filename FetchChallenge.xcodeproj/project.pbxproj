@@ -7,15 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		380227142AFDC38E0065F363 /* MealMetadataMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380227132AFDC38E0065F363 /* MealMetadataMO.swift */; };
+		380227162AFDC4010065F363 /* MealIngredientMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380227152AFDC4010065F363 /* MealIngredientMO.swift */; };
+		3819E50D2AFD832A00547EA3 /* BaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3819E50C2AFD832A00547EA3 /* BaseStorageManager.swift */; };
+		3819E5102AFD837B00547EA3 /* BaseRemoteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3819E50F2AFD837B00547EA3 /* BaseRemoteStorage.swift */; };
+		3819E5122AFD840C00547EA3 /* BaseRemoteStorageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3819E5112AFD840C00547EA3 /* BaseRemoteStorageRequest.swift */; };
+		3819E5142AFD841800547EA3 /* BaseRemoteStorageRequestExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3819E5132AFD841800547EA3 /* BaseRemoteStorageRequestExecutor.swift */; };
+		3819E5182AFD8F6B00547EA3 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3819E5172AFD8F6B00547EA3 /* Meal.swift */; };
+		3819E51A2AFD8F9F00547EA3 /* MealMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3819E5192AFD8F9F00547EA3 /* MealMO.swift */; };
+		3819E51C2AFD926A00547EA3 /* MealCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3819E51B2AFD926A00547EA3 /* MealCategory.swift */; };
+		3819E51E2AFD92FB00547EA3 /* MealCategoryMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3819E51D2AFD92FB00547EA3 /* MealCategoryMO.swift */; };
+		3819E5202AFDA26B00547EA3 /* MealMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3819E51F2AFDA26B00547EA3 /* MealMetadata.swift */; };
+		3819E5222AFDA55100547EA3 /* MealIngredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3819E5212AFDA55100547EA3 /* MealIngredient.swift */; };
+		3833C87B2AFF585A00F7AF76 /* IStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3833C87A2AFF585A00F7AF76 /* IStorageManager.swift */; };
+		3833C87D2B01B0BF00F7AF76 /* PersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3833C87C2B01B0BF00F7AF76 /* PersistentContainer.swift */; };
+		3833C87F2B01B0E700F7AF76 /* PersistentContainerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3833C87E2B01B0E700F7AF76 /* PersistentContainerProvider.swift */; };
+		3833C8812B01EA6E00F7AF76 /* IPredicateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3833C8802B01EA6E00F7AF76 /* IPredicateKeys.swift */; };
+		3833C8832B02AFDB00F7AF76 /* IPropertiesRepresantable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3833C8822B02AFDB00F7AF76 /* IPropertiesRepresantable.swift */; };
 		3868BD0F2AFD66F70079CB60 /* FetchChallengeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868BD0E2AFD66F70079CB60 /* FetchChallengeApp.swift */; };
 		3868BD112AFD66F70079CB60 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868BD102AFD66F70079CB60 /* ContentView.swift */; };
 		3868BD132AFD66F90079CB60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3868BD122AFD66F90079CB60 /* Assets.xcassets */; };
 		3868BD162AFD66F90079CB60 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3868BD152AFD66F90079CB60 /* Preview Assets.xcassets */; };
-		3868BD182AFD66F90079CB60 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868BD172AFD66F90079CB60 /* Persistence.swift */; };
 		3868BD1B2AFD66F90079CB60 /* FetchChallenge.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3868BD192AFD66F90079CB60 /* FetchChallenge.xcdatamodeld */; };
 		3868BD252AFD66F90079CB60 /* FetchChallengeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868BD242AFD66F90079CB60 /* FetchChallengeTests.swift */; };
 		3868BD2F2AFD66F90079CB60 /* FetchChallengeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868BD2E2AFD66F90079CB60 /* FetchChallengeUITests.swift */; };
 		3868BD312AFD66F90079CB60 /* FetchChallengeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868BD302AFD66F90079CB60 /* FetchChallengeUITestsLaunchTests.swift */; };
+		38C055CA2AFD689100FA36DD /* HTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055C92AFD689100FA36DD /* HTTPRequest.swift */; };
+		38C055CC2AFD689C00FA36DD /* HTTPRequestExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055CB2AFD689C00FA36DD /* HTTPRequestExecutor.swift */; };
+		38C055CE2AFD68CB00FA36DD /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055CD2AFD68CB00FA36DD /* IRequest.swift */; };
+		38C055D02AFD68DC00FA36DD /* IRequestExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055CF2AFD68DC00FA36DD /* IRequestExecutor.swift */; };
+		38C055D32AFD690B00FA36DD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055D22AFD690B00FA36DD /* Constants.swift */; };
+		38C055D52AFD695100FA36DD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055D42AFD695100FA36DD /* Utils.swift */; };
+		38C055DA2AFD69C100FA36DD /* ILocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055D92AFD69C100FA36DD /* ILocalStorage.swift */; };
+		38C055DC2AFD69E000FA36DD /* IRemoteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055DB2AFD69E000FA36DD /* IRemoteStorage.swift */; };
+		38C055DE2AFD69F200FA36DD /* IStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055DD2AFD69F100FA36DD /* IStorage.swift */; };
+		38C055E12AFD6A1B00FA36DD /* BaseLocalStorageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055E02AFD6A1B00FA36DD /* BaseLocalStorageRequest.swift */; };
+		38C055E32AFD6A4400FA36DD /* BaseLocalStorageRequestExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055E22AFD6A4400FA36DD /* BaseLocalStorageRequestExecutor.swift */; };
+		38C055E52AFD6A7F00FA36DD /* BaseLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055E42AFD6A7F00FA36DD /* BaseLocalStorage.swift */; };
+		38C055E82AFD6AC400FA36DD /* IModelManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055E72AFD6AC400FA36DD /* IModelManagedObject.swift */; };
+		38C055EA2AFD6ADB00FA36DD /* IModelStructObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C055E92AFD6ADB00FA36DD /* IModelStructObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,18 +66,48 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		380227132AFDC38E0065F363 /* MealMetadataMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealMetadataMO.swift; sourceTree = "<group>"; };
+		380227152AFDC4010065F363 /* MealIngredientMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealIngredientMO.swift; sourceTree = "<group>"; };
+		3819E50C2AFD832A00547EA3 /* BaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStorageManager.swift; sourceTree = "<group>"; };
+		3819E50F2AFD837B00547EA3 /* BaseRemoteStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRemoteStorage.swift; sourceTree = "<group>"; };
+		3819E5112AFD840C00547EA3 /* BaseRemoteStorageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRemoteStorageRequest.swift; sourceTree = "<group>"; };
+		3819E5132AFD841800547EA3 /* BaseRemoteStorageRequestExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRemoteStorageRequestExecutor.swift; sourceTree = "<group>"; };
+		3819E5172AFD8F6B00547EA3 /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
+		3819E5192AFD8F9F00547EA3 /* MealMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealMO.swift; sourceTree = "<group>"; };
+		3819E51B2AFD926A00547EA3 /* MealCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCategory.swift; sourceTree = "<group>"; };
+		3819E51D2AFD92FB00547EA3 /* MealCategoryMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCategoryMO.swift; sourceTree = "<group>"; };
+		3819E51F2AFDA26B00547EA3 /* MealMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealMetadata.swift; sourceTree = "<group>"; };
+		3819E5212AFDA55100547EA3 /* MealIngredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealIngredient.swift; sourceTree = "<group>"; };
+		3833C87A2AFF585A00F7AF76 /* IStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IStorageManager.swift; sourceTree = "<group>"; };
+		3833C87C2B01B0BF00F7AF76 /* PersistentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentContainer.swift; sourceTree = "<group>"; };
+		3833C87E2B01B0E700F7AF76 /* PersistentContainerProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentContainerProvider.swift; sourceTree = "<group>"; };
+		3833C8802B01EA6E00F7AF76 /* IPredicateKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPredicateKeys.swift; sourceTree = "<group>"; };
+		3833C8822B02AFDB00F7AF76 /* IPropertiesRepresantable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPropertiesRepresantable.swift; sourceTree = "<group>"; };
 		3868BD0B2AFD66F70079CB60 /* FetchChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FetchChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3868BD0E2AFD66F70079CB60 /* FetchChallengeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchChallengeApp.swift; sourceTree = "<group>"; };
 		3868BD102AFD66F70079CB60 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3868BD122AFD66F90079CB60 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3868BD152AFD66F90079CB60 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		3868BD172AFD66F90079CB60 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		3868BD1A2AFD66F90079CB60 /* FetchChallenge.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FetchChallenge.xcdatamodel; sourceTree = "<group>"; };
 		3868BD202AFD66F90079CB60 /* FetchChallengeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FetchChallengeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3868BD242AFD66F90079CB60 /* FetchChallengeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchChallengeTests.swift; sourceTree = "<group>"; };
 		3868BD2A2AFD66F90079CB60 /* FetchChallengeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FetchChallengeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3868BD2E2AFD66F90079CB60 /* FetchChallengeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchChallengeUITests.swift; sourceTree = "<group>"; };
 		3868BD302AFD66F90079CB60 /* FetchChallengeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchChallengeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		38C055C92AFD689100FA36DD /* HTTPRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequest.swift; sourceTree = "<group>"; };
+		38C055CB2AFD689C00FA36DD /* HTTPRequestExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequestExecutor.swift; sourceTree = "<group>"; };
+		38C055CD2AFD68CB00FA36DD /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
+		38C055CF2AFD68DC00FA36DD /* IRequestExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequestExecutor.swift; sourceTree = "<group>"; };
+		38C055D22AFD690B00FA36DD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		38C055D42AFD695100FA36DD /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		38C055D92AFD69C100FA36DD /* ILocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILocalStorage.swift; sourceTree = "<group>"; };
+		38C055DB2AFD69E000FA36DD /* IRemoteStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRemoteStorage.swift; sourceTree = "<group>"; };
+		38C055DD2AFD69F100FA36DD /* IStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IStorage.swift; sourceTree = "<group>"; };
+		38C055E02AFD6A1B00FA36DD /* BaseLocalStorageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLocalStorageRequest.swift; sourceTree = "<group>"; };
+		38C055E22AFD6A4400FA36DD /* BaseLocalStorageRequestExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLocalStorageRequestExecutor.swift; sourceTree = "<group>"; };
+		38C055E42AFD6A7F00FA36DD /* BaseLocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLocalStorage.swift; sourceTree = "<group>"; };
+		38C055E72AFD6AC400FA36DD /* IModelManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IModelManagedObject.swift; sourceTree = "<group>"; };
+		38C055E92AFD6ADB00FA36DD /* IModelStructObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IModelStructObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +135,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3819E50B2AFD831100547EA3 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				3819E50C2AFD832A00547EA3 /* BaseStorageManager.swift */,
+				3833C8792AFF584900F7AF76 /* Interfaces */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		3819E50E2AFD835D00547EA3 /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+				3819E50F2AFD837B00547EA3 /* BaseRemoteStorage.swift */,
+				3819E5112AFD840C00547EA3 /* BaseRemoteStorageRequest.swift */,
+				3819E5132AFD841800547EA3 /* BaseRemoteStorageRequestExecutor.swift */,
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		3819E5152AFD8F5400547EA3 /* ManagedObjects */ = {
+			isa = PBXGroup;
+			children = (
+				380227152AFDC4010065F363 /* MealIngredientMO.swift */,
+				380227132AFDC38E0065F363 /* MealMetadataMO.swift */,
+				3819E5192AFD8F9F00547EA3 /* MealMO.swift */,
+				3819E51D2AFD92FB00547EA3 /* MealCategoryMO.swift */,
+			);
+			path = ManagedObjects;
+			sourceTree = "<group>";
+		};
+		3819E5162AFD8F5E00547EA3 /* StructObjects */ = {
+			isa = PBXGroup;
+			children = (
+				3819E5212AFDA55100547EA3 /* MealIngredient.swift */,
+				3819E51F2AFDA26B00547EA3 /* MealMetadata.swift */,
+				3819E5172AFD8F6B00547EA3 /* Meal.swift */,
+				3819E51B2AFD926A00547EA3 /* MealCategory.swift */,
+			);
+			path = StructObjects;
+			sourceTree = "<group>";
+		};
+		3833C8792AFF584900F7AF76 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				3833C87A2AFF585A00F7AF76 /* IStorageManager.swift */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
 		3868BD022AFD66F70079CB60 = {
 			isa = PBXGroup;
 			children = (
@@ -98,10 +207,14 @@
 		3868BD0D2AFD66F70079CB60 /* FetchChallenge */ = {
 			isa = PBXGroup;
 			children = (
+				3819E50B2AFD831100547EA3 /* Managers */,
+				38C055D72AFD69A900FA36DD /* Storage */,
+				38C055C62AFD685100FA36DD /* Network */,
+				38C055C72AFD686900FA36DD /* Interfaces */,
+				38C055D12AFD690000FA36DD /* Helpers */,
 				3868BD0E2AFD66F70079CB60 /* FetchChallengeApp.swift */,
 				3868BD102AFD66F70079CB60 /* ContentView.swift */,
 				3868BD122AFD66F90079CB60 /* Assets.xcassets */,
-				3868BD172AFD66F90079CB60 /* Persistence.swift */,
 				3868BD192AFD66F90079CB60 /* FetchChallenge.xcdatamodeld */,
 				3868BD142AFD66F90079CB60 /* Preview Content */,
 			);
@@ -131,6 +244,87 @@
 				3868BD302AFD66F90079CB60 /* FetchChallengeUITestsLaunchTests.swift */,
 			);
 			path = FetchChallengeUITests;
+			sourceTree = "<group>";
+		};
+		38C055C62AFD685100FA36DD /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				38C055C92AFD689100FA36DD /* HTTPRequest.swift */,
+				38C055CB2AFD689C00FA36DD /* HTTPRequestExecutor.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		38C055C72AFD686900FA36DD /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				38C055CD2AFD68CB00FA36DD /* IRequest.swift */,
+				38C055CF2AFD68DC00FA36DD /* IRequestExecutor.swift */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		38C055C82AFD687A00FA36DD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3819E5162AFD8F5E00547EA3 /* StructObjects */,
+				3819E5152AFD8F5400547EA3 /* ManagedObjects */,
+				38C055E62AFD6AB700FA36DD /* Interfaces */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		38C055D12AFD690000FA36DD /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				38C055D22AFD690B00FA36DD /* Constants.swift */,
+				38C055D42AFD695100FA36DD /* Utils.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		38C055D72AFD69A900FA36DD /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				38C055C82AFD687A00FA36DD /* Models */,
+				3819E50E2AFD835D00547EA3 /* Remote */,
+				38C055DF2AFD6A1200FA36DD /* Local */,
+				38C055D82AFD69B600FA36DD /* Interfaces */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		38C055D82AFD69B600FA36DD /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				38C055D92AFD69C100FA36DD /* ILocalStorage.swift */,
+				38C055DB2AFD69E000FA36DD /* IRemoteStorage.swift */,
+				38C055DD2AFD69F100FA36DD /* IStorage.swift */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		38C055DF2AFD6A1200FA36DD /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				38C055E42AFD6A7F00FA36DD /* BaseLocalStorage.swift */,
+				38C055E02AFD6A1B00FA36DD /* BaseLocalStorageRequest.swift */,
+				38C055E22AFD6A4400FA36DD /* BaseLocalStorageRequestExecutor.swift */,
+				3833C87E2B01B0E700F7AF76 /* PersistentContainerProvider.swift */,
+				3833C87C2B01B0BF00F7AF76 /* PersistentContainer.swift */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		38C055E62AFD6AB700FA36DD /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				38C055E72AFD6AC400FA36DD /* IModelManagedObject.swift */,
+				38C055E92AFD6ADB00FA36DD /* IModelStructObject.swift */,
+				3833C8802B01EA6E00F7AF76 /* IPredicateKeys.swift */,
+				3833C8822B02AFDB00F7AF76 /* IPropertiesRepresantable.swift */,
+			);
+			path = Interfaces;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,9 +458,39 @@
 			buildActionMask = 2147483647;
 			files = (
 				3868BD1B2AFD66F90079CB60 /* FetchChallenge.xcdatamodeld in Sources */,
-				3868BD182AFD66F90079CB60 /* Persistence.swift in Sources */,
+				3819E50D2AFD832A00547EA3 /* BaseStorageManager.swift in Sources */,
+				3819E51A2AFD8F9F00547EA3 /* MealMO.swift in Sources */,
+				3833C87B2AFF585A00F7AF76 /* IStorageManager.swift in Sources */,
+				3833C87D2B01B0BF00F7AF76 /* PersistentContainer.swift in Sources */,
+				38C055DC2AFD69E000FA36DD /* IRemoteStorage.swift in Sources */,
+				38C055DA2AFD69C100FA36DD /* ILocalStorage.swift in Sources */,
+				380227162AFDC4010065F363 /* MealIngredientMO.swift in Sources */,
+				38C055E12AFD6A1B00FA36DD /* BaseLocalStorageRequest.swift in Sources */,
+				38C055E82AFD6AC400FA36DD /* IModelManagedObject.swift in Sources */,
+				38C055EA2AFD6ADB00FA36DD /* IModelStructObject.swift in Sources */,
+				38C055CE2AFD68CB00FA36DD /* IRequest.swift in Sources */,
+				3819E5142AFD841800547EA3 /* BaseRemoteStorageRequestExecutor.swift in Sources */,
+				3819E5122AFD840C00547EA3 /* BaseRemoteStorageRequest.swift in Sources */,
+				38C055D02AFD68DC00FA36DD /* IRequestExecutor.swift in Sources */,
+				3819E51C2AFD926A00547EA3 /* MealCategory.swift in Sources */,
+				38C055DE2AFD69F200FA36DD /* IStorage.swift in Sources */,
+				3833C8812B01EA6E00F7AF76 /* IPredicateKeys.swift in Sources */,
+				3833C87F2B01B0E700F7AF76 /* PersistentContainerProvider.swift in Sources */,
+				3833C8832B02AFDB00F7AF76 /* IPropertiesRepresantable.swift in Sources */,
+				38C055CA2AFD689100FA36DD /* HTTPRequest.swift in Sources */,
+				38C055D52AFD695100FA36DD /* Utils.swift in Sources */,
 				3868BD112AFD66F70079CB60 /* ContentView.swift in Sources */,
+				38C055CC2AFD689C00FA36DD /* HTTPRequestExecutor.swift in Sources */,
+				380227142AFDC38E0065F363 /* MealMetadataMO.swift in Sources */,
+				3819E5182AFD8F6B00547EA3 /* Meal.swift in Sources */,
+				3819E51E2AFD92FB00547EA3 /* MealCategoryMO.swift in Sources */,
+				38C055E52AFD6A7F00FA36DD /* BaseLocalStorage.swift in Sources */,
 				3868BD0F2AFD66F70079CB60 /* FetchChallengeApp.swift in Sources */,
+				38C055E32AFD6A4400FA36DD /* BaseLocalStorageRequestExecutor.swift in Sources */,
+				3819E5102AFD837B00547EA3 /* BaseRemoteStorage.swift in Sources */,
+				38C055D32AFD690B00FA36DD /* Constants.swift in Sources */,
+				3819E5202AFDA26B00547EA3 /* MealMetadata.swift in Sources */,
+				3819E5222AFDA55100547EA3 /* MealIngredient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

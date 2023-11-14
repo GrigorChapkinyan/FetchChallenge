@@ -1,9 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="22G91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="MealCategoryMO" representedClassName=".MealCategoryMO" syncable="YES" codeGenerationType="category">
+        <attribute name="customId" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="meals" toMany="YES" deletionRule="Cascade" destinationEntity="MealMO" inverseName="category" inverseEntity="MealMO"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="customId"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
-    <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-    </elements>
+    <entity name="MealIngredientMO" representedClassName=".MealIngredientMO" syncable="YES" codeGenerationType="category">
+        <attribute name="customId" attributeType="String"/>
+        <attribute name="measure" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="metadata" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealMetadataMO" inverseName="ingredients" inverseEntity="MealMetadataMO"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="customId"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="MealMetadataMO" representedClassName=".MealMetadataMO" syncable="YES" codeGenerationType="category">
+        <attribute name="alternateDrinkName" optional="YES" attributeType="String"/>
+        <attribute name="area" attributeType="String"/>
+        <attribute name="creativeCommonsConfirmed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="dateModified" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="imageSourceUrlPath" optional="YES" attributeType="String"/>
+        <attribute name="instruction" attributeType="String"/>
+        <attribute name="mealId" attributeType="String"/>
+        <attribute name="sourceUrlPath" attributeType="String"/>
+        <attribute name="tag" optional="YES" attributeType="String"/>
+        <attribute name="youtubeVideoUrlPath" attributeType="String"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MealIngredientMO" inverseName="metadata" inverseEntity="MealIngredientMO"/>
+        <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealMO" inverseName="metadata" inverseEntity="MealMO"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="mealId"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="MealMO" representedClassName=".MealMO" syncable="YES" codeGenerationType="category">
+        <attribute name="customId" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="thumUrlPath" optional="YES" attributeType="String"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealCategoryMO" inverseName="meals" inverseEntity="MealCategoryMO"/>
+        <relationship name="metadata" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="MealMetadataMO" inverseName="meal" inverseEntity="MealMetadataMO"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="customId"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
 </model>
