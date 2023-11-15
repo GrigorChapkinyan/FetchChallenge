@@ -50,7 +50,7 @@ struct MealCategory: IModelStructObject {
     }
     
     init(from decoder: Decoder) throws {
-        guard   let name = decoder.userInfo[CodingUserInfoKey(rawValue: Constants.MealCategory.RequestQueryKeys.name.rawValue)!] as? String else {
+        guard let name = decoder.userInfo[CodingUserInfoKey(rawValue: Constants.MealCategory.RequestQueryKeys.name.rawValue)!] as? String else {
             throw MealCategoryError.parseErrorNameAndIdRequired
         }
         
@@ -166,7 +166,7 @@ struct MealCategory: IModelStructObject {
             switch key {
                case .name:
                     // Will present the name of category
-                    let queryItemToAppend = URLQueryItem(name: "c", value: val)
+                let queryItemToAppend = URLQueryItem(name: Constants.MealCategory.RequestQueryKeys.name.rawValue, value: val)
                     queryItems.append(queryItemToAppend)
                 default:
                     break

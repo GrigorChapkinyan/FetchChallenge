@@ -28,7 +28,10 @@ final class BaseStorageManager<L: ILocalStorage, R: IRemoteStorage>: ObservableO
     
     private let localStorage: L
     private let remoteStorage: R
-    private var tasksInProgress = [Task<Any, Never>]()
+    private var localStorageBackgroundUpdatingTasks = [Task<Any, Never>?]()
+    private var tasksInProgress: [Task<Any, Never>?] {
+        return localStorageBackgroundUpdatingTasks
+    }
     
     // MARK: - Initializers
     
@@ -43,7 +46,7 @@ final class BaseStorageManager<L: ILocalStorage, R: IRemoteStorage>: ObservableO
     // MARK: - DeInitializer
     
     deinit {
-        tasksInProgress.forEach({ $0.cancel() })
+        tasksInProgress.forEach({ $0?.cancel() })
     }
     
     // MARK: - IStorageManager
@@ -109,8 +112,8 @@ final class BaseStorageManager<L: ILocalStorage, R: IRemoteStorage>: ObservableO
                 let task: Task<Any, Never> = Task.detached { [weak self] in
                     (try? await self?.localStorage.addFromRemote(remoteItems, ignorablePropertiesForOverwrite: ignorablePropertiesForOverwrite).get()) ?? Void()
                 }
-                // Saving reference to have opportunity to cancel in the future if needed
-                self.tasksInProgress.append(task)
+                // Saving reference to have opportunity to work with it in the future
+                self.localStorageBackgroundUpdatingTasks.append(task)
             }
             
             // Returning items
@@ -140,6 +143,13 @@ final class BaseStorageManager<L: ILocalStorage, R: IRemoteStorage>: ObservableO
             }
                  
             if needToFecthFromLocal {
+                // First need to wait for local storage updating tasks,
+                // To return synced, correct data
+                for localStorageTaskIter in localStorageBackgroundUpdatingTasks {
+                    let _ = await localStorageTaskIter?.value
+                }
+
+                // After that,
                 // Trying to get appropriate items from the local storage
                 itemsToReturn = try? await getRemoteConvertedItemsFromLocalStorage(
                     predicateDict: predicateDict,

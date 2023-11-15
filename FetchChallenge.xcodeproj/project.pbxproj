@@ -24,6 +24,8 @@
 		3833C87F2B01B0E700F7AF76 /* PersistentContainerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3833C87E2B01B0E700F7AF76 /* PersistentContainerProvider.swift */; };
 		3833C8812B01EA6E00F7AF76 /* IPredicateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3833C8802B01EA6E00F7AF76 /* IPredicateKeys.swift */; };
 		3833C8832B02AFDB00F7AF76 /* IPropertiesRepresantable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3833C8822B02AFDB00F7AF76 /* IPropertiesRepresantable.swift */; };
+		3833C8852B032C8700F7AF76 /* MockMealCategoryValid.json in Resources */ = {isa = PBXBuildFile; fileRef = 3833C8842B032C8700F7AF76 /* MockMealCategoryValid.json */; };
+		3833C8872B032C9100F7AF76 /* MockMealCategoryInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 3833C8862B032C9000F7AF76 /* MockMealCategoryInvalid.json */; };
 		3868BD0F2AFD66F70079CB60 /* FetchChallengeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868BD0E2AFD66F70079CB60 /* FetchChallengeApp.swift */; };
 		3868BD112AFD66F70079CB60 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868BD102AFD66F70079CB60 /* ContentView.swift */; };
 		3868BD132AFD66F90079CB60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3868BD122AFD66F90079CB60 /* Assets.xcassets */; };
@@ -83,6 +85,8 @@
 		3833C87E2B01B0E700F7AF76 /* PersistentContainerProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentContainerProvider.swift; sourceTree = "<group>"; };
 		3833C8802B01EA6E00F7AF76 /* IPredicateKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPredicateKeys.swift; sourceTree = "<group>"; };
 		3833C8822B02AFDB00F7AF76 /* IPropertiesRepresantable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPropertiesRepresantable.swift; sourceTree = "<group>"; };
+		3833C8842B032C8700F7AF76 /* MockMealCategoryValid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockMealCategoryValid.json; sourceTree = "<group>"; };
+		3833C8862B032C9000F7AF76 /* MockMealCategoryInvalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockMealCategoryInvalid.json; sourceTree = "<group>"; };
 		3868BD0B2AFD66F70079CB60 /* FetchChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FetchChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3868BD0E2AFD66F70079CB60 /* FetchChallengeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchChallengeApp.swift; sourceTree = "<group>"; };
 		3868BD102AFD66F70079CB60 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -184,6 +188,15 @@
 			path = Interfaces;
 			sourceTree = "<group>";
 		};
+		3833C8882B032CFC00F7AF76 /* Recourses */ = {
+			isa = PBXGroup;
+			children = (
+				3833C8842B032C8700F7AF76 /* MockMealCategoryValid.json */,
+				3833C8862B032C9000F7AF76 /* MockMealCategoryInvalid.json */,
+			);
+			path = Recourses;
+			sourceTree = "<group>";
+		};
 		3868BD022AFD66F70079CB60 = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				3868BD242AFD66F90079CB60 /* FetchChallengeTests.swift */,
+				3833C8882B032CFC00F7AF76 /* Recourses */,
 			);
 			path = FetchChallengeTests;
 			sourceTree = "<group>";
@@ -440,6 +454,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3833C8852B032C8700F7AF76 /* MockMealCategoryValid.json in Resources */,
+				3833C8872B032C9100F7AF76 /* MockMealCategoryInvalid.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

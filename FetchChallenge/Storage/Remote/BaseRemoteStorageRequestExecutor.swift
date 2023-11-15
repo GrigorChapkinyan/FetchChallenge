@@ -11,12 +11,12 @@ import Foundation
 final class BaseRemoteStorageRequestExecutor<ItemType: IModelStructObject>: IRequestExecutor {
     // MARK: - Private Properties
     
-    private let httpRequestExecutor: HTTPRequestExecutor
+    private let networkRequestExecutor: IRequestExecutor
     
     // MARK: Initializers
     
-    init(with httpRequestExecutor: HTTPRequestExecutor) {
-        self.httpRequestExecutor = httpRequestExecutor
+    init(with networkRequestExecutor: IRequestExecutor) {
+        self.networkRequestExecutor = networkRequestExecutor
     }
     
     // MARK: - IRequestExecutor
@@ -31,7 +31,7 @@ final class BaseRemoteStorageRequestExecutor<ItemType: IModelStructObject>: IReq
             // Trying to parse remoteRequest into HttpRequest
             let httpRequest = try ItemType.convertRemoteStorageRequestToHttpRequest(remoteStorageRequest)
             // Executing the httpRequest
-            let httpRequestResult = await httpRequestExecutor
+            let httpRequestResult = await networkRequestExecutor
                 .execute(httpRequest)
             var retVal: Result<Any, Error>
             
@@ -105,6 +105,8 @@ enum BaseRemoteStorageRequestExecutorError: Swift.Error {
     case noProvidedApiForCurrentAction
     case dataDowncastError
 }
+
+extension BaseRemoteStorageRequestExecutorError: Equatable {}
 
 extension BaseRemoteStorageRequestExecutorError: LocalizedError {
     var errorDescription: String? {
