@@ -22,7 +22,7 @@ extension MealMO: IModelManagedObject {
         }
         
         let metadata = try self.metadata?.getStructObject() as? MealMetadata
-        let meal = Meal(id: id, metadata: metadata, name: name, thumUrlPath: thumUrlPath)
+        let meal = Meal(id: id, metadata: metadata, name: name, thumUrlPath: thumUrlPath, categoryName: category?.name)
         
         return meal
     }
@@ -43,6 +43,10 @@ extension MealMO: IModelManagedObject {
                 case .id:
                     let nsPredicateToAppend = NSPredicate(format: "customId = %@", val)
                     nsPredicates.append(nsPredicateToAppend)
+                
+                case .categoryName:
+                        let nsPredicateToAppend = NSPredicate(format: "category.name = %@", val)
+                        nsPredicates.append(nsPredicateToAppend)
                 
                 default:
                     let nsPredicateToAppend = NSPredicate(format: "\(key.rawValue) = %@", val)

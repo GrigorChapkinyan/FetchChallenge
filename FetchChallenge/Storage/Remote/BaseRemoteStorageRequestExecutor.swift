@@ -82,12 +82,18 @@ final class BaseRemoteStorageRequestExecutor<ItemType: IModelStructObject>: IReq
         
         var parsedItems: [ItemType]
         
-        
-        if ItemType.expectArray(for: remoteStorageRequest.requestType) {
-            parsedItems = try ItemType.getDecoder(for: remoteStorageRequest).decode([ItemType].self, from: data)
+        // First checking if objects are wrapped inside wrapper object
+        if ItemType.expectToBeDecodedWithWrapperObject(for: remoteStorageRequest.requestType) {
+            parsedItems = try ItemType.getDecoder(for: remoteStorageRequest).decode(ItemType.WrapperObject.self, from: data).items
         }
+        // Otherwise checking if they are array or single type
         else {
-            parsedItems = [try ItemType.getDecoder(for: remoteStorageRequest).decode(ItemType.self, from: data)]
+            if ItemType.expectArray(for: remoteStorageRequest.requestType) {
+                parsedItems = try ItemType.getDecoder(for: remoteStorageRequest).decode([ItemType].self, from: data)
+            }
+            else {
+                parsedItems = [try ItemType.getDecoder(for: remoteStorageRequest).decode(ItemType.self, from: data)]
+            }
         }
         
         if let sortDescriptor = sortDescriptor {

@@ -49,6 +49,35 @@ final class BaseStorageManager<L: ILocalStorage, R: IRemoteStorage>: ObservableO
         tasksInProgress.forEach({ $0?.cancel() })
     }
     
+    // MARK: Public Static API
+    
+    /// Returns an instance constructed with the base a base class objecsts
+    /// - Parameters:
+    ///   - urlSessionConfig: Session config to be passed to network request executor
+    ///   - localStorageInMemory: Indicates wether the local objects must be stored inside the memory, or in the persistent store
+    /// - Returns: Constructed object
+    static func getConstructedWithBaseObjects<localType, remoteType>
+    (
+        networkExecutor: IRequestExecutor? = nil,
+        urlSessionConfig: URLSessionConfiguration = .default,
+        localStorageInMemory: Bool = false
+    ) async -> BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage<remoteType>>
+    where localType: IModelManagedObject,
+          remoteType: IModelStructObject,
+          BaseStorageManager.LocalType == localType,
+          BaseStorageManager.RemoteType == remoteType,
+          L == BaseLocalStorage<localType, remoteType>,
+          R == BaseRemoteStorage<remoteType>  {
+        let networkExecutor = networkExecutor ?? HTTPRequestExecutor(urlSessionConfig: urlSessionConfig)
+        let categoryRemoteStorageExecutor = BaseRemoteStorageRequestExecutor<remoteType>(with: networkExecutor)
+        let categoryLocalStorageExecutor = await BaseLocalStorageRequestExecutor<localType, remoteType>(inMemory: localStorageInMemory)
+        let categoryLocalStorage = BaseLocalStorage<localType, remoteType>(with: categoryLocalStorageExecutor)
+        let categoryRemoteStorage = BaseRemoteStorage<remoteType>(with: categoryRemoteStorageExecutor)
+        let categoryStorageManager = BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage>(localStorage: categoryLocalStorage, remoteStorage: categoryRemoteStorage)
+        
+        return categoryStorageManager
+    }
+    
     // MARK: - IStorageManager
     
     func remove(

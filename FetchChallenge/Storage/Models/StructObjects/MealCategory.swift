@@ -8,62 +8,68 @@
 import Foundation
 import CoreData
 
-
-
 struct MealCategory: IModelStructObject {
-    // MARK: - Private Static Properties
-    
-    private static let extraCodingKeyName = CodingUserInfoKey(rawValue: Constants.MealCategory.RequestQueryKeys.name.rawValue)!
-    
     // MARK: - CodingKeys
 
     enum CodingKeys: String, CodingKey {
-        case meals = "meals"
+        case id = "idCategory"
+        case name = "strCategory"
+        case thumbUrlPath = "strCategoryThumb"
+        case descriptionStr = "strCategoryDescription"
     }
     
     // MARK: - Nested Types
     
     enum PredicateKeys: String, IPredicateKeys {
-        case id = "id"
-        case name = "name"
+        case id
+        case name
+        case thumbUrlPath
+        case descriptionStr
     }
 
     enum PropertiesRepresantable: IPropertiesRepresantable  {
         case id
         case name
+        case thumbUrlPath
+        case descriptionStr
         case meals
         case mealsProperties(keys: Meal.PropertiesRepresantable)
+    }
+    
+    struct WrapperObject: IWrapperObject {
+        var items: [MealCategory]
+        
+        enum CodingKeys: String, CodingKey, CaseIterable {
+            case items = "categories"
+        }
     }
     
     // MARK: - Public Properties
     
     var id: String
     var name: String
-    var meals: [Meal]
+    var thumbUrlPath: String
+    var descriptionStr: String
+    var meals: [Meal]?
     
     // MARK: - Decodable
     
-    init(id: String, name: String, meals: [Meal]) {
+    init(
+        id: String, 
+        name: String,
+        thumbUrlPath: String,
+        categoryDescription: String,
+        meals: [Meal]?) {
         self.id = id
         self.name = name
+        self.thumbUrlPath = thumbUrlPath
+        self.descriptionStr = categoryDescription
         self.meals = meals
-    }
-    
-    init(from decoder: Decoder) throws {
-        guard let name = decoder.userInfo[CodingUserInfoKey(rawValue: Constants.MealCategory.RequestQueryKeys.name.rawValue)!] as? String else {
-            throw MealCategoryError.parseErrorNameAndIdRequired
-        }
-        
-        self.name = name
-        self.id = self.name
-        
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.meals = try container.decode([Meal].self, forKey: .meals)
     }
     
     // MARK: - IModelStructObject
     
-    func getManagedObject(context: NSManagedObjectContext, ignorablePropertiesForOverwrite: [PropertiesRepresantable] = []) -> any IModelManagedObject {
+    func getManagedObject(context: NSManagedObjectContext, ignorablePropertiesForOverwrite: [PropertiesRepresantable] = []) throws -> any IModelManagedObject {
         // First trying to fetch the object from the local storage,
         // maybe item with the same id alread exist
         let fetchRequest = MealCategoryMO.fetchRequest()
@@ -86,12 +92,17 @@ struct MealCategory: IModelStructObject {
                 }
             })
             
-            let mealManageObjects: [MealMO] = meals.compactMap({
-                let objectIter = try? $0.getManagedObject(context: context, ignorablePropertiesForOverwrite: mealsIgnoredProperties) as? MealMO
-                objectIter?.category = mealCategoryMO
-                return objectIter
-            })
-            (mealCategoryMO.meals as? NSMutableSet)?.addObjects(from: mealManageObjects)
+            if let meals = meals {
+                let mealManageObjects: [MealMO] = meals.compactMap({
+                    let objectIter = try? $0.getManagedObject(context: context, ignorablePropertiesForOverwrite: mealsIgnoredProperties) as? MealMO
+                    objectIter?.category = mealCategoryMO
+                    return objectIter
+                })
+                (mealCategoryMO.meals as? NSMutableSet)?.addObjects(from: mealManageObjects)
+            }
+            else {
+                (mealCategoryMO.meals as? NSMutableSet)?.removeAllObjects()
+            }
         }
         
         // Checking if the "name" property needs to be overwritten
@@ -103,15 +114,24 @@ struct MealCategory: IModelStructObject {
         if (isNewMO || !ignorablePropertiesForOverwrite.contains(.id)) {
             mealCategoryMO.customId = self.id
         }
-
+        
+        // Checking if the "thumbUrlPath" property needs to be overwritten
+        if (isNewMO || !ignorablePropertiesForOverwrite.contains(.thumbUrlPath)) {
+            mealCategoryMO.thumbUrlPath = self.thumbUrlPath
+        }
+        
+        // Checking if the "descriptionStr" property needs to be overwritten
+        if (isNewMO || !ignorablePropertiesForOverwrite.contains(.descriptionStr)) {
+            mealCategoryMO.descriptionStr = self.descriptionStr
+        }
+        
         return mealCategoryMO
     }
     
     static func convertRemoteStorageRequestToHttpRequest(_ remoteStorageRequest: BaseRemoteStorageRequest<Self>) throws -> HTTPRequest {
         switch remoteStorageRequest.requestType {
             case .fetch(let queryItems, _, _):
-                let httpRequest = HTTPRequest(url: Constants.MealCategory.Endpoints.getApiBaseUrlPath.rawValue, method: .get, headers: nil, params: queryItems, body: nil)
-                return httpRequest
+                return try getHTTPRequest(for: queryItems)
             
             case .add(_):
                 throw BaseRemoteStorageRequestExecutorError.noProvidedApiForCurrentAction
@@ -123,19 +143,6 @@ struct MealCategory: IModelStructObject {
     
     static func getDecoder(for remoteStorageRequest: BaseRemoteStorageRequest<Self>) -> JSONDecoder {
         let jsonDecoder = JSONDecoder()
-        var name: String?
-        
-        switch remoteStorageRequest.requestType {
-            case .fetch(let queryItems, _, _):
-                name = queryItems?.filter({ $0.name ==              Constants.MealCategory.RequestQueryKeys.name.rawValue }).compactMap({ $0.value }).first
-            default:
-                break
-        }
-        
-        if let name = name {
-            jsonDecoder.userInfo = [extraCodingKeyName : name]
-        }
-        
         return jsonDecoder
     }
     
@@ -156,39 +163,58 @@ struct MealCategory: IModelStructObject {
     }
     
     static func getQueryItems(from predicateDict: [PredicateKeys : String]?) -> [URLQueryItem]? {
-        guard let predicateDict = predicateDict else {
-            return nil
+        return nil
+    }
+    
+    static func expectToBeDecodedWithWrapperObject(
+        for baseRemoteStorageRequestType: BaseRemoteStorageRequest<ItemType>.RequestType
+    ) -> Bool {
+        var retVal: Bool
+        
+        // Just for showing
+        switch baseRemoteStorageRequestType {
+            case .fetch(let queryItems, _, _):
+                retVal = expectToBeDecodedWithWrapperObject(for: queryItems)
+            case .add:
+                retVal = false
+            case .delete:
+                retVal = false
         }
         
-        var queryItems = [URLQueryItem]()
-            
-        for (key, val) in predicateDict {
-            switch key {
-               case .name:
-                    // Will present the name of category
-                let queryItemToAppend = URLQueryItem(name: Constants.MealCategory.RequestQueryKeys.name.rawValue, value: val)
-                    queryItems.append(queryItemToAppend)
-                default:
-                    break
-            }
-        }
-                
-        return queryItems
+        return retVal
     }
-}
+    
+    // MARK: - Private API
 
-// MARK: - MealCategoryError
-
-enum MealCategoryError: Swift.Error {
-    case parseErrorNameAndIdRequired
-}
-
-extension MealCategoryError: LocalizedError {
-    var errorDescription: String? {
-        switch self {
-            case .parseErrorNameAndIdRequired:
-                return "\"MealCategoryError\": parsing failed. Set name and id first."
+    static private func getHTTPRequest(for queryItems: [URLQueryItem]?) throws -> HTTPRequest {
+        var retVal: HTTPRequest?
+        
+        // Indicating the base url from the past queryItems
+        if (queryItems == nil || (queryItems?.isEmpty == true)) {
+            let httpRequest = HTTPRequest(url: Constants.MealCategory.Endpoints.getAllBaseUrlPath.rawValue, method: .get, headers: nil, params: nil, body: nil)
+            retVal = httpRequest
         }
+        
+        if let retVal = retVal {
+            return retVal
+        }
+        else {
+            throw BaseRemoteStorageRequestExecutorError.noProvidedApiForCurrentAction
+        }
+    }
+    
+    static private func expectToBeDecodedWithWrapperObject(for queryItems: [URLQueryItem]?) -> Bool {
+        var retVal: Bool
+        
+        // Indicating if we need to expect json data in wrapped object from passed query items
+        if (queryItems == nil || (queryItems?.isEmpty == true)) {
+            retVal = true
+        }
+        else {
+            retVal = false
+        }
+        
+        return retVal
     }
 }
 
@@ -196,14 +222,8 @@ extension MealCategoryError: LocalizedError {
 
 fileprivate extension Constants {
     struct MealCategory {
-        enum RequestQueryKeys: String {
-            case name = "c"
+        enum Endpoints: String {
+            case getAllBaseUrlPath = "https://themealdb.com/api/json/v1/1/lookup.php"
         }
-    }
-}
-
-fileprivate extension Constants.MealCategory {
-    enum Endpoints: String {
-        case getApiBaseUrlPath = "https://themealdb.com/api/json/v1/1/filter.php"
     }
 }

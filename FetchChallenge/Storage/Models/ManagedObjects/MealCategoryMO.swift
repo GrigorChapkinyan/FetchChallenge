@@ -19,12 +19,19 @@ extension MealCategoryMO: IModelManagedObject {
         guard let mealsSet = meals,
               let mealMOArray = mealsSet.allObjects as? [MealMO],
               let id = self.customId,
-              let name = self.name else {
+              let name = self.name,
+              let thumbUrlPath = self.thumbUrlPath,
+              let descriptionStr = self.descriptionStr  else {
             throw IModelManagedObjectError.propertyIsNil
         }
         
         let mealsArray = try mealMOArray.compactMap({ try $0.getStructObject() as? Meal })
-        let mealCategory = MealCategory(id: id, name: name, meals: mealsArray)
+        let mealCategory = MealCategory(
+            id: id,
+            name: name,
+            thumbUrlPath: thumbUrlPath,
+            categoryDescription: descriptionStr,
+            meals: mealsArray)
         
         return mealCategory
     }
@@ -42,12 +49,11 @@ extension MealCategoryMO: IModelManagedObject {
             
         for (key, val) in predicateDict {
             switch key {
-                case .name:
-                    let nsPredicateToAppend = NSPredicate(format: "\(key.rawValue) = %@", val)
-                    nsPredicates.append(nsPredicateToAppend)
-                
                 case .id:
                     let nsPredicateToAppend = NSPredicate(format: "customId = %@", val)
+                    nsPredicates.append(nsPredicateToAppend)
+                default:
+                    let nsPredicateToAppend = NSPredicate(format: "\(key.rawValue) = %@", val)
                     nsPredicates.append(nsPredicateToAppend)
             }
         }

@@ -29,17 +29,17 @@ struct MealMetadata: IModelStructObject {
     // MARK: - Nested Types
     
     enum PredicateKeys: String, IPredicateKeys {
-        case mealId = "mealId"
-        case area = "area"
-        case instruction = "instruction"
-        case youtubeVideoUrlPath = "youtubeVideoUrlPath"
-        case sourceUrlPath = "sourceUrlPath"
-        case categoryId = "categoryId"
-        case tag = "tag"
-        case alternateDrinkName = "alternateDrinkName"
-        case imageSourceUrlPath = "imageSourceUrlPath"
-        case creativeCommonsConfirmed = "creativeCommonsConfirmed"
-        case dateModified = "dateModified"
+        case mealId
+        case area
+        case instruction
+        case youtubeVideoUrlPath
+        case sourceUrlPath
+        case categoryId
+        case tag
+        case alternateDrinkName
+        case imageSourceUrlPath
+        case creativeCommonsConfirmed
+        case dateModified
     }
     
     enum PropertiesRepresantable: IPropertiesRepresantable  {
@@ -56,6 +56,14 @@ struct MealMetadata: IModelStructObject {
         case dateModified
         case ingredients
         case ingredientsProperties(keys: MealIngredient.PropertiesRepresantable)
+    }
+    
+    struct WrapperObject: IWrapperObject {
+        var items: [MealMetadata]
+        
+        enum CodingKeys: String, CodingKey, CaseIterable {
+            case items
+        }
     }
     
     // MARK: - Public Properties
@@ -235,6 +243,10 @@ struct MealMetadata: IModelStructObject {
     
     static func getQueryItems(from predicateDict: [PredicateKeys : String]?) -> [URLQueryItem]? {
         return nil
+    }
+    
+    static func expectToBeDecodedWithWrapperObject(for baseRemoteStorageRequestType: BaseRemoteStorageRequest<ItemType>.RequestType) -> Bool {
+        return false
     }
 }
 

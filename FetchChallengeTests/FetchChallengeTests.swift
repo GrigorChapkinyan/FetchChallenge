@@ -20,17 +20,12 @@ final class FetchChallengeTests: XCTestCase {
     
     // MARK: - BaseStorageManager
     
-    func test_BaseStorageManager_GetItemsMethod_WithSuccess() async throws {
+    func test_BaseStorageManager_GetItemsMethod_MealCategoryData_WithSuccess() async throws {
         typealias localType = MealCategoryMO
         typealias remoteType = MealCategory
         
-        let categoryTestName = "CategoryTestName"
         let mockHttpExecutor = TestRequestExecutor(dataModelType: .mealCategory)
-        let categoryRemoteStorageExecutor = BaseRemoteStorageRequestExecutor<remoteType>(with: mockHttpExecutor)
-        let categoryLocalStorageExecutor = await BaseLocalStorageRequestExecutor<localType, remoteType>(inMemory: true)
-        let categoryLocalStorage = BaseLocalStorage<localType, remoteType>(with: categoryLocalStorageExecutor)
-        let categoryRemoteStorage = BaseRemoteStorage<remoteType>(with: categoryRemoteStorageExecutor)
-        let categoryStorageManager = BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage>(localStorage: categoryLocalStorage, remoteStorage: categoryRemoteStorage)
+        let categoryStorageManager: BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage<remoteType>> = await BaseStorageManager.getConstructedWithBaseObjects(networkExecutor: mockHttpExecutor, localStorageInMemory: true)
 
         var meal: Meal?
         var category: MealCategory?
@@ -38,31 +33,30 @@ final class FetchChallengeTests: XCTestCase {
 
         do {
             category = try await categoryStorageManager.getItems(
-                predicateDict: [.name : categoryTestName],
+                predicateDict: [.id : "1"],
                 sortDescriptor: SortDescriptor(\.id, order: .forward),
                 limit: 10)
                 .get()
                 .first
             
             meal = category?
-                .meals
+                .meals?
                 .first
         }
         catch {
             receivedError = error
         }
-
+        
         // MARK: Checking category
-        XCTAssertEqual(category?.id, categoryTestName)
-        XCTAssertEqual(category?.name, categoryTestName)
-        XCTAssertEqual(category?.meals.count, 1)
+        
+        XCTAssertEqual(category?.id, "1")
+        XCTAssertEqual(category?.name, "Beef")
+        XCTAssertEqual(category?.thumbUrlPath, "https://www.themealdb.com/images/category/beef.png")
+        XCTAssertEqual(category?.descriptionStr, "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times.[1] Beef is a source of high-quality protein and essential nutrients.[2]")
 
         // MARK: Checking meal
         
-        XCTAssertNil(meal?.metadata)
-        XCTAssertEqual(meal?.id, "53049")
-        XCTAssertEqual(meal?.name, "Apam balik")
-        XCTAssertEqual(meal?.thumUrlPath, "https://www.themealdb.com/images/media/meals/adxcbq1619787919.jpg")
+        XCTAssertNil(meal)
         
         // MARK: Checking error
 
@@ -73,20 +67,15 @@ final class FetchChallengeTests: XCTestCase {
         typealias localType = MealCategoryMO
         typealias remoteType = MealCategory
         
-        let categoryTestName = "CategoryTestName"
         let mockHttpExecutor = TestRequestExecutor(dataModelType: .mealCategory, mockScenes: [.returnWrongDataType])
-        let categoryRemoteStorageExecutor = BaseRemoteStorageRequestExecutor<remoteType>(with: mockHttpExecutor)
-        let categoryLocalStorageExecutor = await BaseLocalStorageRequestExecutor<localType, remoteType>(inMemory: true)
-        let categoryLocalStorage = BaseLocalStorage<localType, remoteType>(with: categoryLocalStorageExecutor)
-        let categoryRemoteStorage = BaseRemoteStorage<remoteType>(with: categoryRemoteStorageExecutor)
-        let categoryStorageManager = BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage>(localStorage: categoryLocalStorage, remoteStorage: categoryRemoteStorage)
-
+        let categoryStorageManager: BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage<remoteType>> = await BaseStorageManager.getConstructedWithBaseObjects(networkExecutor: mockHttpExecutor, localStorageInMemory: true)
+        
         var category: MealCategory?
         var receivedError: Error?
 
         do {
             category = try await categoryStorageManager.getItems(
-                predicateDict: [.name : categoryTestName],
+                predicateDict: [.id : "1"],
                 sortDescriptor: SortDescriptor(\.id, order: .forward),
                 limit: 10)
                 .get()
@@ -109,20 +98,15 @@ final class FetchChallengeTests: XCTestCase {
         typealias localType = MealCategoryMO
         typealias remoteType = MealCategory
         
-        let categoryTestName = "CategoryTestName"
         let mockHttpExecutor = TestRequestExecutor(dataModelType: .mealCategory, mockScenes: [.returnInvalidFileUrl])
-        let categoryRemoteStorageExecutor = BaseRemoteStorageRequestExecutor<remoteType>(with: mockHttpExecutor)
-        let categoryLocalStorageExecutor = await BaseLocalStorageRequestExecutor<localType, remoteType>(inMemory: true)
-        let categoryLocalStorage = BaseLocalStorage<localType, remoteType>(with: categoryLocalStorageExecutor)
-        let categoryRemoteStorage = BaseRemoteStorage<remoteType>(with: categoryRemoteStorageExecutor)
-        let categoryStorageManager = BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage>(localStorage: categoryLocalStorage, remoteStorage: categoryRemoteStorage)
-
+        let categoryStorageManager: BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage<remoteType>> = await BaseStorageManager.getConstructedWithBaseObjects(networkExecutor: mockHttpExecutor, localStorageInMemory: true)
+        
         var category: MealCategory?
         var receivedError: Error?
 
         do {
             category = try await categoryStorageManager.getItems(
-                predicateDict: [.name : categoryTestName],
+                predicateDict: [.id : "1"],
                 sortDescriptor: SortDescriptor(\.id, order: .forward),
                 limit: 10)
                 .get()
@@ -144,20 +128,15 @@ final class FetchChallengeTests: XCTestCase {
         typealias localType = MealCategoryMO
         typealias remoteType = MealCategory
         
-        let categoryTestName = "CategoryTestName"
         let mockHttpExecutor = TestRequestExecutor(dataModelType: .mealCategory, mockScenes: [.triggerConnectionError])
-        let categoryRemoteStorageExecutor = BaseRemoteStorageRequestExecutor<remoteType>(with: mockHttpExecutor)
-        let categoryLocalStorageExecutor = await BaseLocalStorageRequestExecutor<localType, remoteType>(inMemory: true)
-        let categoryLocalStorage = BaseLocalStorage<localType, remoteType>(with: categoryLocalStorageExecutor)
-        let categoryRemoteStorage = BaseRemoteStorage<remoteType>(with: categoryRemoteStorageExecutor)
-        let categoryStorageManager = BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage>(localStorage: categoryLocalStorage, remoteStorage: categoryRemoteStorage)
+        let categoryStorageManager: BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage<remoteType>> = await BaseStorageManager.getConstructedWithBaseObjects(networkExecutor: mockHttpExecutor, localStorageInMemory: true)
         
         var category: MealCategory?
         var receivedError: Error?
 
         do {
             category = try await categoryStorageManager.getItems(
-                predicateDict: [.name : categoryTestName],
+                predicateDict: [.id : "1"],
                 sortDescriptor: SortDescriptor(\.id, order: .forward),
                 limit: 10)
                 .get()
@@ -177,24 +156,20 @@ final class FetchChallengeTests: XCTestCase {
     }
     
     func test_BaseStorageManager_GetItemsMethod_WithFailure_NoConnection_DataReturn() async throws {
-        typealias localType = MealCategoryMO
-        typealias remoteType = MealCategory
+        typealias localType = MealMO
+        typealias remoteType = Meal
         
-        let categoryTestName = "CategoryTestName"
         // First fetching without connection error,
         // To save "inMemory" storage
-        let mockHttpExecutor = TestRequestExecutor(dataModelType: .mealCategory)
-        let categoryRemoteStorageExecutor = BaseRemoteStorageRequestExecutor<remoteType>(with: mockHttpExecutor)
-        let categoryLocalStorageExecutor = await BaseLocalStorageRequestExecutor<localType, remoteType>(inMemory: true)
-        let categoryLocalStorage = BaseLocalStorage<localType, remoteType>(with: categoryLocalStorageExecutor)
-        let categoryRemoteStorage = BaseRemoteStorage<remoteType>(with: categoryRemoteStorageExecutor)
-        let categoryStorageManager = BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage>(localStorage: categoryLocalStorage, remoteStorage: categoryRemoteStorage)
+        let mealId = "53049"
+        let mockHttpExecutor = TestRequestExecutor(dataModelType: .meals(type: .byCategoryName))
+        let storageManager: BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage<remoteType>> = await BaseStorageManager.getConstructedWithBaseObjects(networkExecutor: mockHttpExecutor, localStorageInMemory: true)
         
         var receivedError: Error?
 
         do {
-            let _ = try await categoryStorageManager.getItems(
-                predicateDict: [.name : categoryTestName],
+            let _ = try await storageManager.getItems(
+                predicateDict: [.id : mealId],
                 sortDescriptor: SortDescriptor(\.id, order: .forward),
                 limit: 10)
                 .get()
@@ -206,24 +181,19 @@ final class FetchChallengeTests: XCTestCase {
         
         // Double-checking errors to be nil
         XCTAssertNil(receivedError)
-        XCTAssertNil(categoryStorageManager.lastError)
+        XCTAssertNil(storageManager.lastError)
 
         // Adding "noInternet" mock scene to test executor
         mockHttpExecutor.mockScenes = [.triggerConnectionError]
         
         var meal: Meal?
-        var category: MealCategory?
 
         do {
-            category = try await categoryStorageManager.getItems(
-                predicateDict: [.name : categoryTestName],
+            meal = try await storageManager.getItems(
+                predicateDict: [.id : mealId],
                 sortDescriptor: SortDescriptor(\.id, order: .forward),
                 limit: 10)
                 .get()
-                .first
-            
-            meal = category?
-                .meals
                 .first
         }
         catch {
@@ -231,22 +201,15 @@ final class FetchChallengeTests: XCTestCase {
         }
 
         // MARK: Checking category
-        XCTAssertEqual(category?.id, categoryTestName)
-        XCTAssertEqual(category?.name, categoryTestName)
-        XCTAssertEqual(category?.meals.count, 1)
 
-        // MARK: Checking meal
-        
-        XCTAssertNil(meal?.metadata)
         XCTAssertEqual(meal?.id, "53049")
         XCTAssertEqual(meal?.name, "Apam balik")
         XCTAssertEqual(meal?.thumUrlPath, "https://www.themealdb.com/images/media/meals/adxcbq1619787919.jpg")
-
-
+        
         // MARK: Checking error
 
         XCTAssertNil(receivedError)
-        XCTAssertTrue((categoryStorageManager.lastError as? URLError)?.code == .notConnectedToInternet)
+        XCTAssertTrue((storageManager.lastError as? URLError)?.code == .notConnectedToInternet)
     }
     
     func test_BaseStorageManager_addItemsMethod() async throws {
@@ -254,19 +217,13 @@ final class FetchChallengeTests: XCTestCase {
         typealias remoteType = MealCategory
         
         let mockHttpExecutor = TestRequestExecutor(dataModelType: .mealCategory)
-        let categoryRemoteStorageExecutor = BaseRemoteStorageRequestExecutor<remoteType>(with: mockHttpExecutor)
-        let categoryLocalStorageExecutor = await BaseLocalStorageRequestExecutor<localType, remoteType>(inMemory: true)
-        let categoryLocalStorage = BaseLocalStorage<localType, remoteType>(with: categoryLocalStorageExecutor)
-        let categoryRemoteStorage = BaseRemoteStorage<remoteType>(with: categoryRemoteStorageExecutor)
-        let categoryStorageManager = BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage>(localStorage: categoryLocalStorage, remoteStorage: categoryRemoteStorage)
+        let storageManager: BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage<remoteType>> = await BaseStorageManager.getConstructedWithBaseObjects(networkExecutor: mockHttpExecutor, localStorageInMemory: true)
         
         var receivedError: Error?
 
         do {
-            try await categoryStorageManager.add([
-                MealCategory(id: "TestId", name: "TestName", meals: [
-                    Meal(id: "TestId", metadata: nil, name: "TestName", thumUrlPath: "TestUrlPath")
-                ])
+            try await storageManager.add([
+                getTestMealCategory()
             ])
             .get()
         }
@@ -284,16 +241,12 @@ final class FetchChallengeTests: XCTestCase {
         typealias remoteType = MealCategory
         
         let mockHttpExecutor = TestRequestExecutor(dataModelType: .mealCategory)
-        let categoryRemoteStorageExecutor = BaseRemoteStorageRequestExecutor<remoteType>(with: mockHttpExecutor)
-        let categoryLocalStorageExecutor = await BaseLocalStorageRequestExecutor<localType, remoteType>(inMemory: true)
-        let categoryLocalStorage = BaseLocalStorage<localType, remoteType>(with: categoryLocalStorageExecutor)
-        let categoryRemoteStorage = BaseRemoteStorage<remoteType>(with: categoryRemoteStorageExecutor)
-        let categoryStorageManager = BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage>(localStorage: categoryLocalStorage, remoteStorage: categoryRemoteStorage)
+        let storageManager: BaseStorageManager<BaseLocalStorage<localType, remoteType>, BaseRemoteStorage<remoteType>> = await BaseStorageManager.getConstructedWithBaseObjects(networkExecutor: mockHttpExecutor, localStorageInMemory: true)
         
         var receivedError: Error?
 
         do {
-            try await categoryStorageManager.remove([
+            try await storageManager.remove([
                 getTestMealCategory()
             ])
             .get()
@@ -316,11 +269,12 @@ final class FetchChallengeTests: XCTestCase {
         let categoryLocalStorageExecutor = await BaseLocalStorageRequestExecutor<localType, remoteType>(inMemory: true)
         let categoryLocalStorage = BaseLocalStorage<localType, remoteType>(with: categoryLocalStorageExecutor)
         let persistentContainer = await PersistentContainerProvider.shared.getItem(with: localType.getPersistentContainerName(), inMemory: true)
-        let categoryMOToAdd = getTestMealCategory()
-            .getManagedObject(context: await persistentContainer.moc) as! MealCategoryMO
+        
         var receivedError: Error?
 
         do {
+            let categoryMOToAdd = try getTestMealCategory()
+                .getManagedObject(context: await persistentContainer.moc) as! MealCategoryMO
             try await categoryLocalStorage
                 .add([categoryMOToAdd])
                 .get()
@@ -339,11 +293,12 @@ final class FetchChallengeTests: XCTestCase {
         let categoryLocalStorageExecutor = await BaseLocalStorageRequestExecutor<localType, remoteType>(inMemory: true)
         let categoryLocalStorage = BaseLocalStorage<localType, remoteType>(with: categoryLocalStorageExecutor)
         let persistentContainer = await PersistentContainerProvider.shared.getItem(with: localType.getPersistentContainerName(), inMemory: true)
-        let categoryMOToAddAndRemove = getTestMealCategory()
-            .getManagedObject(context: await persistentContainer.moc) as! MealCategoryMO
         var receivedError: Error?
-
+        var categoryMOToAddAndRemove: MealCategoryMO!
+        
         do {
+            categoryMOToAddAndRemove = try getTestMealCategory()
+                .getManagedObject(context: await persistentContainer.moc) as? MealCategoryMO
             try await categoryLocalStorage
                 .add([categoryMOToAddAndRemove])
                 .get()
@@ -376,9 +331,21 @@ final class FetchChallengeTests: XCTestCase {
     // MARK: - Private API
     
     private func getTestMealCategory() -> MealCategory {
-        return MealCategory(id: "TestId", name: "TestName", meals: [
-            Meal(id: "TestId", metadata: nil, name: "TestName", thumUrlPath: "TestUrlPath")
-        ])
+        return MealCategory(
+            id: "TestId",
+            name: "TestName",
+            thumbUrlPath: "TestUrlPath",
+            categoryDescription: "TestDescription",
+            meals: [
+                Meal(
+                    id: "TestId",
+                    metadata: nil,
+                    name: "TestName",
+                    thumUrlPath: "TestUrlPath",
+                    categoryName: nil
+                )
+            ]
+        )
     }
 }
 
@@ -386,6 +353,12 @@ final class FetchChallengeTests: XCTestCase {
 
 fileprivate enum DataModelType {
     case mealCategory
+    case meals(type: MealsDataFetchedType)
+    
+    enum MealsDataFetchedType {
+        case byCategoryName
+        case byId
+    }
 }
 
 // MARK: - TestRequestExecutor
@@ -458,9 +431,22 @@ fileprivate final class TestRequestExecutor: IRequestExecutor {
         
         switch self.dataModelType {
             case .mealCategory:
-            // Checking which file must be returned
-            let fileName = mockScenes.contains(.returnInvalidFileUrl) ? Constants.FetchChallenge.Utils.mockMealCategoryInvalidFileName.rawValue : Constants.FetchChallenge.Utils.mockMealCategoryValidFileName.rawValue
-            filePath = bundle.path(forResource: fileName, ofType: Constants.FetchChallenge.Utils.mockMealCategoryFileExt.rawValue)
+                // Checking which file must be returned
+                let fileName = mockScenes.contains(.returnInvalidFileUrl) ? Constants.FetchChallenge.Utils.mockMealCategoryInvalidFileName.rawValue : Constants.FetchChallenge.Utils.mockMealCategoryValidFileName.rawValue
+                filePath = bundle.path(forResource: fileName, ofType: Constants.FetchChallenge.Utils.mockMealCategoryFileExt.rawValue)
+            
+            case .meals(let mealType):
+                switch mealType {
+                    case .byId:
+                        // Checking which file must be returned
+                        let fileName = mockScenes.contains(.returnInvalidFileUrl) ? Constants.FetchChallenge.Utils.MockMealByIdInvalid.rawValue : Constants.FetchChallenge.Utils.mockMealByIdValid.rawValue
+                        filePath = bundle.path(forResource: fileName, ofType: Constants.FetchChallenge.Utils.mockMealCategoryFileExt.rawValue)
+
+                    case .byCategoryName:
+                        // Checking which file must be returned
+                        let fileName = mockScenes.contains(.returnInvalidFileUrl) ? Constants.FetchChallenge.Utils.mockMealByCategoryNameInvalid.rawValue : Constants.FetchChallenge.Utils.mockMealByCategoryNameValid.rawValue
+                        filePath = bundle.path(forResource: fileName, ofType: Constants.FetchChallenge.Utils.mockMealCategoryFileExt.rawValue)
+                }
         }
         
         guard let filePath = filePath else {
@@ -478,6 +464,13 @@ fileprivate extension Constants {
         enum Utils: String {
             case mockMealCategoryValidFileName = "MockMealCategoryValid"
             case mockMealCategoryInvalidFileName = "MockMealCategoryInvalid"
+            
+            case mockMealByIdValid = "MockMealByIdValid"
+            case MockMealByIdInvalid = "MockMealByIdInvalid"
+            
+            case mockMealByCategoryNameValid = "MockMealByCategoryNameValid"
+            case mockMealByCategoryNameInvalid = "MockMealByCategoryNameInvalid"
+            
             case mockMealCategoryFileExt = "json"
         }
     }
