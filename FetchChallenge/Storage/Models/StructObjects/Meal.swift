@@ -165,7 +165,7 @@ struct Meal: IModelStructObject {
         // and use it in the future during the decoding process
         switch remoteStorageRequest.requestType {
             case .fetch(let queryItems, _, _):
-                let categoryNameOptional = queryItems?.filter({ $0.name == Constants.Meal.RequestQueryKeys.categoryName.rawValue }).first
+            let categoryNameOptional = queryItems?.filter({ $0.name == Constants.Meal.RequestQueryKeys.categoryName.rawValue }).first?.value
             
             if let categoryName = categoryNameOptional {
                 jsonDecoder.userInfo = [extraCodingKeyCategoryName : categoryName]

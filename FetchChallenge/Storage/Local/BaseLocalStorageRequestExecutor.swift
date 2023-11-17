@@ -14,11 +14,6 @@ final class BaseLocalStorageRequestExecutor<ItemType: IModelManagedObject, Remot
     
     private let inMemory: Bool
     private let persistentContainer: PersistentContainer
-    private var moc: NSManagedObjectContext {
-        get async {
-            await persistentContainer.moc
-        }
-    }
     
     // MARK: - Initializers
     
@@ -41,27 +36,30 @@ final class BaseLocalStorageRequestExecutor<ItemType: IModelManagedObject, Remot
                     return .success(result)
                 
                 case .update:
-                    let result: Void = try await update()
+                    let moc = await self.persistentContainer.bgMoc
+                    let result: Void = try await update(moc: moc)
                     return .success(result)
                 
                 case .delete(let items):
-                    let result: Void = try await delete(items)
+                    let moc = await self.persistentContainer.moc
+                    let result: Void = try await delete(items, moc: moc)
                     return .success(result)
                 
                 case .deleteFromRemoteItems(let remoteItems, let ignorablePropertiesForOverwrite):
-                    let moc = await self.moc
+                    let moc = await self.persistentContainer.bgMoc
                     let managedObjects = remoteItems.compactMap({ try? $0.getManagedObject(context: moc, ignorablePropertiesForOverwrite: ignorablePropertiesForOverwrite) as? ItemType })
-                            let result: Void = try await delete(managedObjects)
+                    let result: Void = try await delete(managedObjects, moc: moc)
                         return .success(result)
                 
                 case .add(let items):
-                    let result: Void = try await add(items)
+                    let moc = await self.persistentContainer.bgMoc
+                    let result: Void = try await add(items, moc: moc)
                     return .success(result)
                 
                 case .addFromRemoteItems(let remoteItems, let ignorablePropertiesForOverwrite):
-                    let moc = await self.moc
+                    let moc = await self.persistentContainer.bgMoc
                     let managedObjects = remoteItems.compactMap({ try? $0.getManagedObject(context: moc, ignorablePropertiesForOverwrite: ignorablePropertiesForOverwrite) as? ItemType })
-                    let result: Void = try await add(managedObjects)
+                    let result: Void = try await add(managedObjects, moc: moc)
                     return .success(result)
             }
         }
@@ -83,7 +81,7 @@ final class BaseLocalStorageRequestExecutor<ItemType: IModelManagedObject, Remot
         sortDescriptor: SortDescriptor<ItemType>?,
         limit: Int?
     ) async throws -> [ItemType] {
-        let moc = await self.moc
+        let moc = await persistentContainer.moc
         let fetchRequest = NSFetchRequest<ItemType>(entityName: ItemType.getEntityName())
         fetchRequest.predicate = predicate
         
@@ -98,7 +96,7 @@ final class BaseLocalStorageRequestExecutor<ItemType: IModelManagedObject, Remot
         }
         
         do {
-            let fetchRequestResult = try moc.performAndWait {
+            let fetchRequestResult = try await moc.perform {
                 try moc.fetch(fetchRequest)
             }
             
@@ -111,29 +109,25 @@ final class BaseLocalStorageRequestExecutor<ItemType: IModelManagedObject, Remot
     
     /// Removes passed items from the storage
     /// - Parameter items: Items to be removed
-    private func delete(_ items: [ItemType]) async throws {
-        let moc = await self.moc
-        
+    private func delete(_ items: [ItemType], moc: NSManagedObjectContext) async throws {
         for itemIter in items {
-            moc.performAndWait {
+            await moc.perform {
                 moc.delete(itemIter)
             }
         }
-        try await update()
+        try await update(moc: moc)
     }
     
     /// Adds passed items into the storage
     /// - Parameter items: Items to be added
-    private func add(_ items: [ItemType]) async throws {
-        try await update()
+    private func add(_ items: [ItemType], moc: NSManagedObjectContext) async throws {
+        try await update(moc: moc)
     }
     
     /// Updates the storage if its has changes
-    private func update() async throws {
-        let moc = await self.moc
-        
+    private func update(moc: NSManagedObjectContext) async throws {
         if moc.hasChanges {
-            try moc.performAndWait {
+            try await moc.perform {
                 do {
                     try moc.save()
                 }

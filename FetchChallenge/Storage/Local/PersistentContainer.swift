@@ -25,11 +25,13 @@ actor PersistentContainer: Equatable {
             }
         })
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        container.viewContext.automaticallyMergesChangesFromParent = true
         return container
     }()
     var moc: NSManagedObjectContext {
         return persistentContainer.viewContext
+    }
+    var bgMoc: NSManagedObjectContext {
+        return persistentContainer.newBackgroundContext()
     }
     
     // MARK: - Initializers

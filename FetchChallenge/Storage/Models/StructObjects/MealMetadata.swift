@@ -73,8 +73,8 @@ struct MealMetadata: IModelStructObject {
     let area: String
     let instruction: String
     let youtubeVideoUrlPath: String
-    let sourceUrlPath: String
     let categoryId: String
+    let sourceUrlPath: String?
     let tag: String?
     let alternateDrinkName: String?
     let imageSourceUrlPath: String?
@@ -105,7 +105,7 @@ struct MealMetadata: IModelStructObject {
         self.instruction = try container.decode(String.self, forKey: .instruction)
         self.tag = try container.decodeIfPresent(String.self, forKey: .tag)
         self.youtubeVideoUrlPath = try container.decode(String.self, forKey: .youtubeVideoUrlPath)
-        self.sourceUrlPath = try container.decode(String.self, forKey: .sourceUrlPath)
+        self.sourceUrlPath = try container.decodeIfPresent(String.self, forKey: .sourceUrlPath)
         self.categoryId = try container.decode(String.self, forKey: .categoryId)
         self.imageSourceUrlPath = try container.decodeIfPresent(String.self, forKey: .imageSourceUrlPath)
         self.creativeCommonsConfirmed = try container.decodeIfPresent(Bool.self, forKey: .creativeCommonsConfirmed)

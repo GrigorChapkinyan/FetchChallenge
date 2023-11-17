@@ -83,16 +83,16 @@ struct MealCategory: IModelStructObject {
         
         // Checking if the "meals" property needs to be overwritten
         if (isNewMO || !ignorablePropertiesForOverwrite.contains(.meals)) {
-            // Checking which properties of "meal" need to be ignroed from overwritting
-            let mealsIgnoredProperties = ignorablePropertiesForOverwrite.compactMap({ switch $0 {
-                    case .mealsProperties(let properties):
-                        return properties
-                default:
-                    return nil
-                }
-            })
-            
             if let meals = meals {
+                // Checking which properties of "meal" need to be ignroed from overwritting
+                let mealsIgnoredProperties = ignorablePropertiesForOverwrite.compactMap({ switch $0 {
+                        case .mealsProperties(let properties):
+                            return properties
+                    default:
+                        return nil
+                    }
+                })
+                
                 let mealManageObjects: [MealMO] = meals.compactMap({
                     let objectIter = try? $0.getManagedObject(context: context, ignorablePropertiesForOverwrite: mealsIgnoredProperties) as? MealMO
                     objectIter?.category = mealCategoryMO
@@ -101,7 +101,21 @@ struct MealCategory: IModelStructObject {
                 (mealCategoryMO.meals as? NSMutableSet)?.addObjects(from: mealManageObjects)
             }
             else {
-                (mealCategoryMO.meals as? NSMutableSet)?.removeAllObjects()
+                if ((mealCategoryMO.meals == nil) || (mealCategoryMO.meals?.count == 0)) {
+                    let fetchRequest = MealMO.fetchRequest()
+                    fetchRequest.predicate = NSPredicate(format: "\(MealMO.PredicateKeys.categoryName.rawValue) = %@", name)
+                    let alreadyStoredMealMO = try? context.fetch(fetchRequest).first
+                    
+                    if let alreadyStoredMealMO = alreadyStoredMealMO {
+                        // Setting the meal connection
+                        (mealCategoryMO.meals as? NSMutableSet)?.add(alreadyStoredMealMO)
+                        // Setting the category connection
+                        alreadyStoredMealMO.category = mealCategoryMO
+                    }
+                }
+                else {
+                    (mealCategoryMO.meals as? NSMutableSet)?.removeAllObjects()
+                }
             }
         }
         
@@ -223,7 +237,7 @@ struct MealCategory: IModelStructObject {
 fileprivate extension Constants {
     struct MealCategory {
         enum Endpoints: String {
-            case getAllBaseUrlPath = "https://themealdb.com/api/json/v1/1/lookup.php"
+            case getAllBaseUrlPath = "https://www.themealdb.com/api/json/v1/1/categories.php"
         }
     }
 }

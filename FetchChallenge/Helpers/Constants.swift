@@ -12,4 +12,8 @@ struct Constants {
     enum PersistentContainerNames: String {
         case fetchChallenge = "FetchChallenge"
     }
+    
+    enum HardCodedLabels: String, ILocalizableRawRepresentable {
+        case okay = "OK"
+    }
 }

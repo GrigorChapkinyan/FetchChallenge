@@ -24,7 +24,7 @@ protocol IStorageManager where PredicateKeys: IPredicateKeys {
     var firstDataWasFetched: Bool { get }
     
     /// The result of the last successful fetch process
-    var lastSuccessfulFetchResult: RemoteType? { get }
+    var lastSuccessfulFetchResult: [RemoteType]? { get }
     
     /// The error of the last failed process
     var lastError: Error? { get }

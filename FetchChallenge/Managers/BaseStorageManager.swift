@@ -7,9 +7,10 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 /// Base class for the storage manager type
-final class BaseStorageManager<L: ILocalStorage, R: IRemoteStorage>: ObservableObject, IStorageManager where L.RemoteType == R.ItemType, L.RemoteType.PredicateKeys == L.ItemType.PredicateKeys {
+final class BaseStorageManager<L: ILocalStorage, R: IRemoteStorage>:  IStorageManager where L.RemoteType == R.ItemType, L.RemoteType.PredicateKeys == L.ItemType.PredicateKeys {
     // MARK: - Typealias
     
     typealias LocalType = L.ItemType
@@ -20,12 +21,17 @@ final class BaseStorageManager<L: ILocalStorage, R: IRemoteStorage>: ObservableO
     // MARK: - Public Properties
     
     @Published private(set) var isFetchingData: Bool = false
+    @Published private(set) var lastSuccessfulFetchResult: [RemoteType]?
+    @Published private(set) var lastError: Error?
     @Published private(set) var firstDataWasFetched: Bool = false
-    @Published private(set) var lastSuccessfulFetchResult: RemoteType? = nil
-    @Published private(set) var lastError: Error? = nil
     
     // MARK: Private Properties
     
+    @AppStorage("firstDataWasFetched \(LocalType.description())") private var firstDataWasFetchedUserDefaults: Bool = false {
+        didSet {
+            firstDataWasFetched = firstDataWasFetchedUserDefaults
+        }
+    }
     private let localStorage: L
     private let remoteStorage: R
     private var localStorageBackgroundUpdatingTasks = [Task<Any, Never>?]()
@@ -116,6 +122,7 @@ final class BaseStorageManager<L: ILocalStorage, R: IRemoteStorage>: ObservableO
         return .success(Void())
     }
     
+    @discardableResult
     func getItems(
         predicateDict: Dictionary<PredicateKeys, String>?,
         sortDescriptor: SortDescriptor<RemoteType>?,
@@ -194,7 +201,7 @@ final class BaseStorageManager<L: ILocalStorage, R: IRemoteStorage>: ObservableO
         }
         
         firstDataWasFetched = true
-        lastSuccessfulFetchResult = itemsToReturn as? L.RemoteType
+        lastSuccessfulFetchResult = itemsToReturn
         return .success(itemsToReturn)
     }
     

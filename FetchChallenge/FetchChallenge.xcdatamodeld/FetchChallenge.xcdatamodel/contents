@@ -31,7 +31,7 @@
         <attribute name="imageSourceUrlPath" optional="YES" attributeType="String"/>
         <attribute name="instruction" attributeType="String"/>
         <attribute name="mealId" attributeType="String"/>
-        <attribute name="sourceUrlPath" attributeType="String"/>
+        <attribute name="sourceUrlPath" optional="YES" attributeType="String"/>
         <attribute name="tag" optional="YES" attributeType="String"/>
         <attribute name="youtubeVideoUrlPath" attributeType="String"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MealIngredientMO" inverseName="metadata" inverseEntity="MealIngredientMO"/>
