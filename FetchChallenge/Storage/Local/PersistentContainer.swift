@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 /// Actor representing a persistent container type for safely working with it
-actor PersistentContainer: Equatable {
+class PersistentContainer: Equatable {
     // MARK: - Private Properties
     
     private let containerName: String

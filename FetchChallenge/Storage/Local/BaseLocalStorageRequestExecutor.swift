@@ -36,28 +36,28 @@ final class BaseLocalStorageRequestExecutor<ItemType: IModelManagedObject, Remot
                     return .success(result)
                 
                 case .update:
-                    let moc = await self.persistentContainer.bgMoc
+                    let moc = self.persistentContainer.bgMoc
                     let result: Void = try await update(moc: moc)
                     return .success(result)
                 
                 case .delete(let items):
-                    let moc = await self.persistentContainer.moc
+                    let moc = self.persistentContainer.moc
                     let result: Void = try await delete(items, moc: moc)
                     return .success(result)
                 
                 case .deleteFromRemoteItems(let remoteItems, let ignorablePropertiesForOverwrite):
-                    let moc = await self.persistentContainer.bgMoc
+                    let moc = self.persistentContainer.bgMoc
                     let managedObjects = remoteItems.compactMap({ try? $0.getManagedObject(context: moc, ignorablePropertiesForOverwrite: ignorablePropertiesForOverwrite) as? ItemType })
                     let result: Void = try await delete(managedObjects, moc: moc)
                         return .success(result)
                 
                 case .add(let items):
-                    let moc = await self.persistentContainer.bgMoc
+                    let moc = self.persistentContainer.bgMoc
                     let result: Void = try await add(items, moc: moc)
                     return .success(result)
                 
                 case .addFromRemoteItems(let remoteItems, let ignorablePropertiesForOverwrite):
-                    let moc = await self.persistentContainer.bgMoc
+                    let moc = self.persistentContainer.bgMoc
                     let managedObjects = remoteItems.compactMap({ try? $0.getManagedObject(context: moc, ignorablePropertiesForOverwrite: ignorablePropertiesForOverwrite) as? ItemType })
                     let result: Void = try await add(managedObjects, moc: moc)
                     return .success(result)
@@ -81,7 +81,7 @@ final class BaseLocalStorageRequestExecutor<ItemType: IModelManagedObject, Remot
         sortDescriptor: SortDescriptor<ItemType>?,
         limit: Int?
     ) async throws -> [ItemType] {
-        let moc = await persistentContainer.moc
+        let moc = persistentContainer.moc
         let fetchRequest = NSFetchRequest<ItemType>(entityName: ItemType.getEntityName())
         fetchRequest.predicate = predicate
         
