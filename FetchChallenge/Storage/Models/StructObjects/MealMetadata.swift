@@ -83,7 +83,7 @@ struct MealMetadata: IModelStructObject {
 
     // MARK: - Decodable
     
-    init(mealId: String, alternateDrinkName: String?, area: String, instruction: String, tag: String?, youtubeVideoUrlPath: String, sourceUrlPath: String, categoryId: String, imageSourceUrlPath: String?, creativeCommonsConfirmed: Bool?, dateModified: Date?, ingredients: [MealIngredient]) {
+    init(mealId: String, alternateDrinkName: String?, area: String, instruction: String, tag: String?, youtubeVideoUrlPath: String, sourceUrlPath: String?, categoryId: String, imageSourceUrlPath: String?, creativeCommonsConfirmed: Bool?, dateModified: Date?, ingredients: [MealIngredient]) {
         self.mealId = mealId
         self.alternateDrinkName = alternateDrinkName
         self.area = area

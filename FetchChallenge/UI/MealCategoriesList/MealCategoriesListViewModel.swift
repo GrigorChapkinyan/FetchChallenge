@@ -20,6 +20,7 @@ final class MealCategoriesListViewModel: BaseStorageConnectedViewModel<MealCateg
     ) {
         super.init(inMemoryLocalStorage: inMemoryLocalStorage)
         self.sortDescriptor = SortDescriptor(\.id, order: .forward)
+        self.ignorablePropertiesForOverwrite = [.meals]
         self.fetchResultBlock = { [weak self] items in
             self?.mealCategoryRowViewModels = items?.compactMap({ $0 }).map({ MealCategoryRowViewModel(with: $0) })
         }

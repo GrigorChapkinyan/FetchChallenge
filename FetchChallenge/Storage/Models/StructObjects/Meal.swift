@@ -33,6 +33,7 @@ struct Meal: IModelStructObject {
         case name
         case thumUrlPath
         case metadata
+        case categoryName
         case metadataProperties(keys: MealMetadata.PropertiesRepresantable)
     }
     
@@ -79,8 +80,6 @@ struct Meal: IModelStructObject {
         else {
             self.metadata = nil
         }
-        
-        
     }
     
     // MARK: - IModelStructObject
@@ -125,6 +124,11 @@ struct Meal: IModelStructObject {
         // Checking if the "id" property needs to be overwritten
         if (isNewMO || !ignorablePropertiesForOverwrite.contains(.id)) {
             mealMO.customId = self.id
+        }
+        
+        // Checking if the "categoryName" property needs to be overwritten
+        if (isNewMO || !ignorablePropertiesForOverwrite.contains(.categoryName)) {
+            mealMO.categoryName = self.categoryName
         }
         
         // Trying to set parent "category" entity and this child connection,

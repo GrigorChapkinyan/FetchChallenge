@@ -46,10 +46,11 @@ class BaseStorageConnectedViewModel<LocalType: IModelManagedObject, RemoteType: 
     var fetchLimit: Int?
     var sortDescriptor: SortDescriptor<RemoteType>?
     var predicateDict: [RemoteType.PredicateKeys : String]?
-    var userActionWasTriggered: Bool = false
-
+    var ignorablePropertiesForOverwrite = [RemoteType.PropertiesRepresantable]()
+    
     // MARK: - Private Properties
     
+    private var userActionWasTriggered: Bool = false
     private var refresh: (() -> ())?
     private let inMemoryLocalStorage: Bool
     private var cancalables = [AnyCancellable]()
@@ -86,7 +87,7 @@ class BaseStorageConnectedViewModel<LocalType: IModelManagedObject, RemoteType: 
                     strongSelf.storageManager = await BaseStorageManager.getConstructedWithBaseObjects(localStorageInMemory: strongSelf.inMemoryLocalStorage)
                 }
                                 
-                await strongSelf.storageManager.getItems(predicateDict: strongSelf.predicateDict, sortDescriptor: strongSelf.sortDescriptor, limit: strongSelf.fetchLimit)
+                await strongSelf.storageManager.getItems(predicateDict: strongSelf.predicateDict, sortDescriptor: strongSelf.sortDescriptor, limit: strongSelf.fetchLimit, ignorablePropertiesForOverwrite: strongSelf.ignorablePropertiesForOverwrite)
             }
         }
         

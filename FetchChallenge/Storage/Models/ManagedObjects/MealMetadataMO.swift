@@ -23,7 +23,6 @@ extension MealMetadataMO: IModelManagedObject {
               let area = self.area,
               let instruction = self.instruction,
               let youtubeVideoUrlPath = self.youtubeVideoUrlPath,
-              let sourceUrlPath = self.sourceUrlPath,
               let categoryId = self.meal?.category?.customId  else {
             throw IModelManagedObjectError.propertyIsNil
         }
