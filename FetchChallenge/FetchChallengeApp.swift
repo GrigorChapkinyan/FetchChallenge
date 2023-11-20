@@ -11,7 +11,25 @@ import SwiftUI
 struct FetchChallengeApp: App {
     var body: some Scene {
         WindowGroup {
-            MealCategoriesListView(viewModel: MealCategoriesListViewModel())
+            // Unit tests
+            if NSClassFromString(Constants.FetchChallengeApp.Utils.xcTestCase.rawValue) != nil {
+                
+            }
+            // Application
+            else {
+                MealCategoriesListView(viewModel: MealCategoriesListViewModel())
+            }
+        }
+    }
+}
+
+
+// MARK: - Constants + FetchChallengeApp
+
+fileprivate extension Constants {
+    struct FetchChallengeApp {
+        enum Utils: String {
+            case xcTestCase = "XCTestCase"
         }
     }
 }
