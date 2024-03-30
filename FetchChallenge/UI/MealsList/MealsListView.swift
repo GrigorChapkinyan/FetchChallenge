@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct MealsListView: View {
-    // MARK: - ObservedObjects
+    // MARK: - StateObjects
 
-    @ObservedObject var viewModel: MealsListViewModel
+    @StateObject var viewModel: MealsListViewModel
    
     // MARK: - Body
 
