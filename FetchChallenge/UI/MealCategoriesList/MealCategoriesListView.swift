@@ -8,39 +8,41 @@
 import SwiftUI
 
 struct MealCategoriesListView: View {
-    // MARK: - StateObjects
+    // MARK: - ObservedObjects
     
-    @StateObject var viewModel: MealCategoriesListViewModel
+    @ObservedObject var viewModel: MealCategoriesListViewModel
 
     // MARK: - Body
 
     var body: some View {
         NavigationView {
-            if (viewModel.isFetchingFirstData) {
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            else {
-                if let mealCategoryRowViewModels = viewModel.mealCategoryRowViewModels {
-                    List {
-                        ForEach(mealCategoryRowViewModels, id: \.id) {
-                            mealCategoryViewModel in
-                            MealCategoryRowView(viewModel: mealCategoryViewModel)
+            VStack {
+                if (viewModel.isFetchingFirstData) {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+                else {
+                    if let mealCategoryRowViewModels = viewModel.mealCategoryRowViewModels {
+                        List {
+                            ForEach(mealCategoryRowViewModels, id: \.id) {
+                                mealCategoryViewModel in
+                                MealCategoryRowView(viewModel: mealCategoryViewModel)
+                            }
                         }
+                        .refreshable {
+                            viewModel.refreshOnPull?()
+                        }
+                        .listStyle(.automatic)
                     }
-                    .refreshable {
-                        viewModel.refreshOnPull?()
-                    }
-                    .listStyle(.automatic)
                 }
             }
+            .alert(viewModel.error?.localizedDescription ?? "", isPresented: $viewModel.presentAlert) {
+                Button(Constants.HardCodedLabels.okay.localizedString(), role: .cancel) { }
+            }
+            .onAppear(perform: {
+                viewModel.refreshOnAppear?()
+            })
         }
-        .alert(viewModel.error?.localizedDescription ?? "", isPresented: $viewModel.presentAlert) {
-            Button(Constants.HardCodedLabels.okay.localizedString(), role: .cancel) { }
-        }
-        .onAppear(perform: {
-            viewModel.refreshOnAppear?()
-        })
     }
 }
 

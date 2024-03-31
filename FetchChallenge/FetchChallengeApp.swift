@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct FetchChallengeApp: App {
+    @StateObject private var mealCategoriesListViewModel = MealCategoriesListViewModel()
+
     var body: some Scene {
         WindowGroup {
             // Unit tests
@@ -17,12 +19,11 @@ struct FetchChallengeApp: App {
             }
             // Application
             else {
-                MealCategoriesListView(viewModel: MealCategoriesListViewModel())
+                MealCategoriesListView(viewModel: mealCategoriesListViewModel)
             }
         }
     }
 }
-
 
 // MARK: - Constants + FetchChallengeApp
 
